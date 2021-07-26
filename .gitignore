@@ -1,0 +1,9 @@
+Library
+Logs
+obj
+Temp
+.idea
+/Game/Assembly-CSharp-Editor.csproj
+/Game/Assembly-CSharp.csproj
+/Game/Game.sln
+/Game/SRP.sln
