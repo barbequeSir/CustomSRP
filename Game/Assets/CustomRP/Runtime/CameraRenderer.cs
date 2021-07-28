@@ -16,7 +16,7 @@ public partial class CameraRenderer
     private CullingResults _cullingResults;
     private static ShaderTagId _unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit");
     
-    public void Render(ScriptableRenderContext context, Camera camera)
+    public void Render(ScriptableRenderContext context, Camera camera,bool useDynamicBatch,bool useGpuInstance)
     {
         _scriptableRenderContext = context;
         _camera = camera;
@@ -27,19 +27,23 @@ public partial class CameraRenderer
             return;
         }
         Setup();
-        DrawVisibleGeometry();
+        DrawVisibleGeometry(useDynamicBatch,useGpuInstance);
         DrawUnsupportedShaders();
         DrawGizmos();
         Summit();
     }
 
-    void DrawVisibleGeometry()
+    void DrawVisibleGeometry(bool useDynamicBatch,bool useGpuInstance)
     {
         FilteringSettings filteringSettings = new FilteringSettings(RenderQueueRange.opaque);
         //filteringSettings.renderQueueRange = RenderQueueRange.all;
         var sortingSettings = new SortingSettings(_camera);
         sortingSettings.criteria = SortingCriteria.CommonOpaque;
-        DrawingSettings drawingSettings = new DrawingSettings(_unlitShaderTagId,sortingSettings);
+        DrawingSettings drawingSettings = new DrawingSettings(_unlitShaderTagId,sortingSettings)
+        {
+            enableInstancing = useDynamicBatch,
+            enableDynamicBatching = useGpuInstance
+        };
         _scriptableRenderContext.DrawRenderers(_cullingResults,ref drawingSettings,ref filteringSettings);
         _scriptableRenderContext.DrawSkybox(this._camera);
         
