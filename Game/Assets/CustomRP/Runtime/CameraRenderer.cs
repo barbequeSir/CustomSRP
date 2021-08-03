@@ -15,7 +15,9 @@ public partial class CameraRenderer
     private Camera _camera;
     private CullingResults _cullingResults;
     private static ShaderTagId _unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit");
-    
+    private static ShaderTagId _litSahderTagId = new ShaderTagId("CustomLit");
+
+    private Lighting _lighting = new Lighting();
     public void Render(ScriptableRenderContext context, Camera camera,bool useDynamicBatch,bool useGpuInstance)
     {
         _scriptableRenderContext = context;
@@ -27,6 +29,7 @@ public partial class CameraRenderer
             return;
         }
         Setup();
+        _lighting.Setup(context,_cullingResults);
         DrawVisibleGeometry(useDynamicBatch,useGpuInstance);
         DrawUnsupportedShaders();
         DrawGizmos();
@@ -44,6 +47,7 @@ public partial class CameraRenderer
             enableInstancing = useDynamicBatch,
             enableDynamicBatching = useGpuInstance
         };
+        drawingSettings.SetShaderPassName(1,_litSahderTagId);
         _scriptableRenderContext.DrawRenderers(_cullingResults,ref drawingSettings,ref filteringSettings);
         _scriptableRenderContext.DrawSkybox(this._camera);
         
@@ -67,7 +71,6 @@ public partial class CameraRenderer
         _commandBuffer.ClearRenderTarget(clearFlags<=CameraClearFlags.Depth,clearFlags == CameraClearFlags.Color,clearFlags == CameraClearFlags.Color ? _camera.backgroundColor.linear:Color.white);
         _commandBuffer.BeginSample(SampleName);
         ExecuteBuffer();
-        
     }
 
     void ExecuteBuffer()
