@@ -9,8 +9,10 @@ public class CustomRenderPipelineAsset : RenderPipelineAsset
     [SerializeField] private bool _useDynamicBatch = true;
     [SerializeField] private bool _useGPUBatch = true;
     [SerializeField] private bool _useSRPBatch = true;
+
+    [SerializeField] private ShadowSettings _shadowSettings = default;
     protected override RenderPipeline CreatePipeline()
     {
-        return new CustomRenderPipeline(_useDynamicBatch,_useGPUBatch,_useSRPBatch);
+        return new CustomRenderPipeline(_useDynamicBatch,_useGPUBatch,_useSRPBatch,_shadowSettings);
     }
 }

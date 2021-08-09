@@ -15,3 +15,11 @@ MonoBehaviour:
   _useDynamicBatch: 1
   _useGPUBatch: 1
   _useSRPBatch: 0
+  _shadowSettings:
+    maxDistance: 9.4
+    directional:
+      atlasSize: 1024
+      cascadeCount: 4
+      cascadeRatio1: 0.1
+      cascadeRatio2: 0.25
+      cascadeRatio3: 0.5

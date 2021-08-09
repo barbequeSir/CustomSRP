@@ -9,11 +9,13 @@ public class CustomRenderPipeline : RenderPipeline
 
     private bool _useDynamicBatch;
     private bool _useGpuInstance;
-    public CustomRenderPipeline(bool useDynamicBatch,bool useGpuInstance,bool useSRPBatch)
+    private ShadowSettings _shadowSettings;
+    public CustomRenderPipeline(bool useDynamicBatch,bool useGpuInstance,bool useSRPBatch,ShadowSettings shadowSettings)
     {
         GraphicsSettings.useScriptableRenderPipelineBatching = useSRPBatch;
         _useDynamicBatch = useDynamicBatch;
         _useGpuInstance = useGpuInstance;
+        _shadowSettings = shadowSettings;
         GraphicsSettings.lightsUseLinearIntensity = true;
     }
     
@@ -21,7 +23,7 @@ public class CustomRenderPipeline : RenderPipeline
     {
         foreach (var camera in cameras)
         {
-            _cameraRenderer.Render(context,camera,_useDynamicBatch,_useGpuInstance);
+            _cameraRenderer.Render(context,camera,_useDynamicBatch,_useGpuInstance,_shadowSettings);
         }
     }
 }
