@@ -9,6 +9,8 @@ struct Surface{
     float smoothness;
     float3 viewDirection;
     float3 position;
+    float depth;
+    float dither;
 };
 
 #endif

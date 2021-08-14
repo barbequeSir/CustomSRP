@@ -43,6 +43,12 @@ Varyings LitPassVertex(Attribute input)
     output.positionCS = TransformWorldToHClip(output.positionWS);
     output.normalWS =   TransformObjectToWorldNormal(input.normalOS);
     
+    #if UNITY_REVERSED_Z
+        output.positionCS.z = min(output.positionCS.z,output.positionCS.w * UNITY_NEAR_CLIP_VALUE);
+    #else
+        output.positionCS.z = max(output.positionCS.z,output.positionCS.w * UNITY_NEAR_CLIP_VALUE);
+    #endif
+    
     float4 baseST = UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_BaseMap_ST);
     output.baseUV = input.baseUV * baseST.xy + baseST.zw;
     return output;
@@ -67,6 +73,8 @@ float4 LitPassFragment(Varyings input):SV_TARGET
     surface.smoothness = UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Smoothness);
     surface.viewDirection = normalize( _WorldSpaceCameraPos - input.positionWS);
     surface.position = input.positionWS; 
+    surface.depth = -TransformWorldToView(input.positionWS).z;
+    surface.dither = InterleavedGradientNoise(input.positionCS.xy,0);
     #if defined(_CLIPPING)
     clip(base.a - UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Cutoff));
     #endif
