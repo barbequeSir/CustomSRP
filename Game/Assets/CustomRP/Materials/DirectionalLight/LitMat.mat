@@ -9,11 +9,11 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: LitMat
   m_Shader: {fileID: 4800000, guid: 971bd38ec3c7f4dc3995cc8b422996c6, type: 3}
-  m_ShaderKeywords: _CLIPPING _SHADOWS_CLIP
+  m_ShaderKeywords: _CLIPPING _SHADOWS_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: 2450
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -63,7 +63,7 @@ Material:
     - _BumpScale: 1
     - _CLipping: 0
     - _Clipping: 1
-    - _Cutoff: 0.632
+    - _Cutoff: 0.592
     - _DestBlend: 10
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -75,7 +75,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PremultiplyAlpha: 0
-    - _Shadows: 1
+    - _Shadows: 0
     - _Smoothness: 0.807
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
