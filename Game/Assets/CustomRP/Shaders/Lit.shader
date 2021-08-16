@@ -12,6 +12,7 @@
         [Enum(UnityEngine.Rendering.BlendMode)]_SrcBlend("SrcBlend",float) = 1
         [Enum(UnityEngine.Rendering.BlendMode)]_DestBlend("DestBlend",float) = 0
         [Enum(off,0,on,1)]_ZWrite("ZWrite",float) = 1
+        [Toggle(_RECEIVE_SHADOWS)] _ReceiveShadows("Receive_Shadows",FLOAT) = 1
     }
     
     SubShader
@@ -25,6 +26,7 @@
             Blend [_SrcBlend] [_DestBlend]
             ZWrite [_ZWrite]
             HLSLPROGRAM
+            #pragma shader_feature _ _RECEIVE_SHADOWS
             #pragma multi_compile _ _DIRECTIONAL_PCF3 _DIRECTIONAL_PCF5 _DIRECTIONAL_PCF7
             
             #pragma multi_compile _ _CASCADE_BLEND_SOFT _CASCADE_BLEND_DITHER

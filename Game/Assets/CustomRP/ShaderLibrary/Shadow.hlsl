@@ -73,6 +73,9 @@ float FilterDirectionalShadow(float3 positionSTS)
 
 float GetDirectionalShadowAttenuation(DirectionalShadowData directionalShadowData,ShadowData global,Surface surface)
 {
+    #if !defined(_RECEIVE_SHADOWS)
+        return 1.0;
+    #endif
     if(directionalShadowData.strength <=0) return 1.0;
     float3 normalBias = surface.normal * (directionalShadowData.normalBias *_CascadeData[global.cascadeIndex].y);
     float3 positionSTS = mul(_DirectionalShadowMatrices[directionalShadowData.tileIndex],float4(surface.position + normalBias,1.0)).xyz;

@@ -14,6 +14,7 @@ public class CustomShaderGUI : ShaderGUI
     private bool _showPresets;
     public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
     {
+        EditorGUI.BeginChangeCheck();
         base.OnGUI(materialEditor, properties);
 
         _editor = materialEditor;
@@ -28,7 +29,11 @@ public class CustomShaderGUI : ShaderGUI
             FadePreset();
             TransparentPreset();    
         }
-        
+
+        if (EditorGUI.EndChangeCheck())
+        {
+            SetShadowCasterPass();
+        }
     }
 
     enum ShadowMode{On,Clip,Dither,Off}
@@ -73,7 +78,7 @@ public class CustomShaderGUI : ShaderGUI
             }
         }
     }
-
+    
     void SetProperty(string name, string keyword, bool value)
     {
         if (SetProperty(name, value ? 1f : 0f))
@@ -81,6 +86,22 @@ public class CustomShaderGUI : ShaderGUI
             SetKeyword(keyword,value);
         }
     }
+
+    void SetShadowCasterPass()
+    {
+        MaterialProperty shadows = FindProperty("_Shadows", _properties, false);
+        if (shadows == null || shadows.hasMixedValue)
+        {
+            return;
+        }
+
+        bool enabled = shadows.floatValue < (float) ShadowMode.Off;
+        foreach (Material mat in _materials)
+        {
+            mat.SetShaderPassEnabled("ShadowCaster",enabled);
+        }
+    }
+    
 
     bool Clipping
     {

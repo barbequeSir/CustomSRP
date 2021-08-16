@@ -50,6 +50,9 @@ void ShadowCasterPassFragment(Varyings input)
     
     #if defined(_SHADOWS_CLIP)
     clip(base.a - UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial,_Cutoff));
+    #elif defined(_SHADOW_DITHER)
+        float dither = InterleavedGradientNoise(input.positionCS.xy,0);
+        clip(base.a - dither);
     #endif
 }
 #endif
