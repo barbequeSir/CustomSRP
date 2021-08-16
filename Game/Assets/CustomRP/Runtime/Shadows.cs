@@ -157,13 +157,16 @@ public class Shadows
         int tileOffset = index * cascadeCount;
         Vector3 cascadeRatios = _shadowSettings.directional.CascadeRatios;
 
+        float cullingFactor = Mathf.Max(0f,0.8f - _shadowSettings.directional.cascadeFade);
         for (int i = 0; i < cascadeCount; i++)
         {
             _cullingResults.ComputeDirectionalShadowMatricesAndCullingPrimitives(light.visibleLightIndex, i, cascadeCount,
                 cascadeRatios, tileSize, light.nearPlaneOffset,
                 out Matrix4x4 viewMatrix, out Matrix4x4 projMatrix, out ShadowSplitData shadowSplitData);
             
+            shadowSplitData.shadowCascadeBlendCullingFactor = cullingFactor;
             shadowSettings.splitData = shadowSplitData;
+            
             if (index == 0)
             {
                 var splitData = shadowSplitData.cullingSphere;
