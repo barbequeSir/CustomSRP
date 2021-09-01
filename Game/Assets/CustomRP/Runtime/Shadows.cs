@@ -198,6 +198,35 @@ public class Shadows
             m.m23 = -m.m23;
         }
         
+        //(m + 1 )/2   (-1,1)=>(0,1)
+        /* matrixOffset1 +1
+         *    1    0    0    0    
+         *    0    1    0    0
+         *    0    0    1    0
+         *    1    1    1    1
+         */
+        /* matrixScale1 /2
+         *    1/2    0      0    0    
+         *    0      1/2    0    0
+         *    0      0      1/2  0
+         *    0      0      0    1
+         */   
+        
+        /* matrixOffset2  + offset.xy
+        *    1            0    0    0    
+        *    0            1    0    0
+        *    0            0    1    0
+        *    offset.x    offset.y    0    1
+        */   
+
+        /* matrixScale2  *scale
+         *    1/2    0      0    0    
+         *    0      1/2    0    0
+         *    0      0      1/2  0
+         *    0      0      0    1
+         */
+        
+        //m = m * matrixOffset1 * matrixScale1 * matrixOffset2 * matrixScale2;
         float scale = 1f / split;
         m.m00 = (0.5f * (m.m00 + m.m30) + offset.x * m.m30) * scale;
         m.m01 = (0.5f * (m.m01 + m.m31) + offset.x * m.m31) * scale;
@@ -207,10 +236,6 @@ public class Shadows
         m.m11 = (0.5f * (m.m11 + m.m31) + offset.y * m.m31) * scale;
         m.m12 = (0.5f * (m.m12 + m.m32) + offset.y * m.m32) * scale;
         m.m13 = (0.5f * (m.m13 + m.m33) + offset.y * m.m33) * scale;
-        // m.m20 = (0.5f * (m.m20 + m.m30)+ offset.y * m.m33) * scale;
-        // m.m21 = (0.5f * (m.m21 + m.m31)+ offset.y * m.m33) * scale;
-        // m.m22 = (0.5f * (m.m22 + m.m32)+ offset.y * m.m33) * scale;
-        // m.m23 = (0.5f * (m.m23 + m.m33)+ offset.y * m.m33) * scale;
         m.m20 = 0.5f * (m.m20 + m.m30);
         m.m21 = 0.5f * (m.m21 + m.m31);
         m.m22 = 0.5f * (m.m22 + m.m32);
