@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: BakedLightCube1
   m_Shader: {fileID: 4800000, guid: 971bd38ec3c7f4dc3995cc8b422996c6, type: 3}
-  m_ShaderKeywords: _RECEIVE_SHADOWS _SHADOWS_ON
+  m_ShaderKeywords: LIGHTTMAP_ON _LIGHTTMAP_ON _RECEIVE_SHADOWS _SHADOWS_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -60,6 +60,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - LIGHTTMAP_ON: 1
     - _BumpScale: 1
     - _Clipping: 0
     - _Cutoff: 0.5
@@ -69,6 +70,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _LIGHTTMAP_ON: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
