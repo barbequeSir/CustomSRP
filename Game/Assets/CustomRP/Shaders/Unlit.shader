@@ -12,11 +12,17 @@
     
     SubShader
     {
+        HLSLPROGRAM
+        
+        ENDHLSL
+        
         Pass
         {
             Blend [_SrcBlend] [_DestBlend]
             ZWrite [_ZWrite]
             HLSLPROGRAM
+            #include "../ShaderLibrary/Common.hlsl"
+            #include "UnlitInput.hlsl"
             #pragma target 3.5
             #pragma shader_feature _CLIPPING
             #pragma multi_compile_instancing
@@ -29,10 +35,10 @@
         Pass
         {
             Tags{"LightMode"="ShadowCaster"}
-            
             ColorMask 0
-            
             HLSLPROGRAM
+            #include "../ShaderLibrary/Common.hlsl"
+            #include "UnlitInput.hlsl"
             #pragma target 3.5
             //#pragma shader_feature _CLIPPING
             #pragma shader_feature _ _SHADOWS_CLIP _SHADOWS_DITHER
@@ -40,6 +46,21 @@
             #pragma vertex ShadowCasterPassVertex
             #pragma fragment ShadowCasterPassFragment
             #include "ShadowCasterPass.hlsl"
+            ENDHLSL
+        }
+        
+        Pass 
+        {
+            Tags{"LightMode" = "Meta"}
+            Cull Off
+            
+            HLSLPROGRAM
+            #pragma target 3.5
+            #include "../ShaderLibrary/Common.hlsl"
+            #include "UnlitInput.hlsl"
+            #pragma vertex MetaPassVertex
+            #pragma fragment MetaPassFragment
+            #include "MetaPass.hlsl"
             ENDHLSL
         }
     }

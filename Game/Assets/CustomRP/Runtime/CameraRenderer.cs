@@ -54,7 +54,7 @@ public partial class CameraRenderer
         {
             enableInstancing = useDynamicBatch,
             enableDynamicBatching = useGpuInstance,
-            perObjectData = PerObjectData.Lightmaps|PerObjectData.LightProbe
+            perObjectData = PerObjectData.Lightmaps|PerObjectData.LightProbe|PerObjectData.LightProbeProxyVolume
         };
         drawingSettings.SetShaderPassName(1,_litSahderTagId);
         _scriptableRenderContext.DrawRenderers(_cullingResults,ref drawingSettings,ref filteringSettings);
